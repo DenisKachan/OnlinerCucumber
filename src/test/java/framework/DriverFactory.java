@@ -26,7 +26,8 @@ public class DriverFactory {
                 options.addArguments("--safebrowsing-disable-download-protection");
                 options.addArguments("safebrowsing-disable-extension-blacklist");
                 Map<String, Object> prefs = new HashMap<String, Object>();
-                prefs.put("download.default_directory", System.getProperty("user.dir") + configReader.getProperty("downloadPath"));
+                prefs.put("download.default_directory", System.getProperty("user.dir") + configReader
+                        .getProperty("downloadPath"));
                 prefs.put("download.prompt_for_download", false);
                 prefs.put("safebrowsing.enabled", true);
                 options.setExperimentalOption("prefs", prefs);
@@ -37,7 +38,8 @@ public class DriverFactory {
                 WebDriverManager.firefoxdriver().setup();
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.addPreference("browser.download.folderList", 2);
-                firefoxOptions.addPreference("browser.download.dir", System.getProperty("user.dir") + configReader.getProperty("downloadPath"));
+                firefoxOptions.addPreference("browser.download.dir", System.getProperty("user.dir") + configReader
+                        .getProperty("downloadPath"));
                 firefoxOptions.addPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-gzip");
                 log.info("Set up FirefoxDriver");
                 return new FirefoxDriver(firefoxOptions);

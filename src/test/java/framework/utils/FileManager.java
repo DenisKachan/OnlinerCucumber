@@ -14,7 +14,8 @@ public class FileManager {
 
     private Browser browser = new Browser();
     private static PropertyReader configReader = new PropertyReader("config.properties");
-    private final File file = new File(System.getProperty("user.dir") + configReader.getProperty("downloadPath").concat(configReader.getProperty("fileToDownload")));
+    private final File file = new File(System.getProperty("user.dir") + configReader.getProperty("downloadPath")
+            .concat(configReader.getProperty("fileToDownload")));
 
     public void checkAndDeleteFile() {
         if (file.exists()) {

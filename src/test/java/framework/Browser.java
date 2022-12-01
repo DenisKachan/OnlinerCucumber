@@ -21,7 +21,8 @@ public class Browser {
     public static Browser getInstance() {
         if (instance == null) {
             driver = DriverFactory.setUp();
-            driver.manage().timeouts().implicitlyWait(Long.parseLong(configReader.getProperty("defaultWait")), TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(Long.parseLong(configReader.getProperty("defaultWait")),
+                    TimeUnit.SECONDS);
             instance = new Browser();
         }
         return instance;
@@ -57,7 +58,8 @@ public class Browser {
                     }
                     log.info("Wait to the page to be opened");
                     Object result = ((JavascriptExecutor) driver)
-                            .executeScript("return document['readyState'] ? 'complete' == document.readyState : true");
+                            .executeScript("return document['readyState'] ? 'complete' ==" +
+                                    " document.readyState : true");
                     return result instanceof Boolean && (Boolean) result;
                 }
             });
@@ -68,6 +70,6 @@ public class Browser {
 
     public void navigateToURL(String url) {
         log.info("Navigate to {} url", url);
-        Browser.driver.get(configReader.getProperty(url));
+        Browser.driver.get(url);
     }
 }

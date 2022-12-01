@@ -14,7 +14,8 @@ public class Header extends BasePage {
     }
 
     public void navigateSection(String nameOfTheSection) {
-        Label lblGenreOffersCategory = new Label(By.xpath(String.format(commonLocatorForHeaderSection, nameOfTheSection)), "Category of The Header");
+        Label lblGenreOffersCategory = new Label(By.xpath(String.format(commonLocatorForHeaderSection,
+                nameOfTheSection)), "Category of The Header");
         lblGenreOffersCategory.clickAndWait();
     }
 }

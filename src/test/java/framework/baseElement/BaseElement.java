@@ -3,7 +3,6 @@ package framework.baseElement;
 import framework.Browser;
 import framework.utils.PropertyReader;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -34,7 +33,7 @@ public class BaseElement {
         return element.findElements(locator);
     }
 
-    public WebElement getElement(){
+    public WebElement getElement() {
         elementIsPresent();
         return element;
     }
@@ -54,8 +53,9 @@ public class BaseElement {
 
     public void click() {
         elementIsPresent();
-        if (Browser.driver instanceof JavascriptExecutor) {
-            ((JavascriptExecutor) Browser.driver).executeScript("arguments[0].style.border='3px solid red'", element);
+        if (browser.getDriver() instanceof JavascriptExecutor) {
+            ((JavascriptExecutor) browser.getDriver()).executeScript("arguments[0].style.border='3px solid red'",
+                    element);
         }
         log.info("Click {} element", nameElement);
         element.click();
@@ -68,31 +68,34 @@ public class BaseElement {
 
     public void mouseMoveToElement() {
         elementIsPresent();
-        Actions builder = new Actions(Browser.driver);
+        Actions builder = new Actions(browser.getDriver());
         log.info("Move mouse to the element {}", nameElement);
         builder.moveToElement(element).perform();
     }
 
-    public void scrollIntoView(){
+    public void scrollIntoView() {
         elementIsPresent();
-        JavascriptExecutor js = (JavascriptExecutor) Browser.driver;
+        JavascriptExecutor js = (JavascriptExecutor) browser.getDriver();
+        log.info("Scroll into view of an element {}", nameElement);
         js.executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
     public boolean elementIsPresent() {
-        Browser.driver.manage().timeouts().implicitlyWait(Long.parseLong(configReader.getProperty("defaultWait")), TimeUnit.SECONDS);
+        browser.getDriver().manage().timeouts().implicitlyWait(Long.parseLong(configReader.getProperty("defaultWait")),
+                TimeUnit.SECONDS);
         try {
             log.info("Find an element {}", nameElement);
-            element = Browser.driver.findElement(locator);
+            element = browser.getDriver().findElement(locator);
         } catch (Exception e) {
-            log.error("Element {} is not present, error{}", nameElement, ExceptionUtils.getStackTrace(e));
+            log.error("Element {} is not present", nameElement);
         }
         return element.isDisplayed();
     }
 
-    public void waitStalenessOfElement(){
+    public void waitStalenessOfElement() {
         elementIsPresent();
-        WebDriverWait wait = new WebDriverWait(Browser.getInstance().getDriver(), Long.parseLong(configReader.getProperty("webDriverWait")));
+        WebDriverWait wait = new WebDriverWait(browser.getDriver(), Long.parseLong(configReader
+                .getProperty("webDriverWait")));
         wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(element)));
     }
 }

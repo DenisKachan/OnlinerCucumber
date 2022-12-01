@@ -2,7 +2,6 @@ package framework.baseElement;
 
 import framework.Browser;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
@@ -29,7 +28,7 @@ public class BaseElements {
             log.info("Check if the element number {} is displayed", index);
             getElementFromList(index).isDisplayed();
         } catch (Exception e) {
-            log.error("Element from list is not displayed, error {}", ExceptionUtils.getStackTrace(e));
+            log.error("Element from list is not displayed");
         }
         return getElementFromList(index).isDisplayed();
     }
