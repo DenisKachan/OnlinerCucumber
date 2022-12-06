@@ -13,8 +13,8 @@ public class ListOfProductsPage extends BaseOnlinerPage {
             "Price of the product");
     private Label lblDescriptionOfProduct = new Label(By.xpath("//div[@class='schema-product__description']/child::span" +
             "[contains(text(),'частота матрицы')]"), "Description of the product");
-    private String commonLocatorForCheckboxList = "//span[text()='%s']/following::ul[@class='schema-filter__list']";
-    private String commonLocatorForCheckboxOption = "/descendant::span[contains(text(),'%s')]";
+    private String commonLocatorForCheckbox = "//span[text()='%s']/following::ul[@class='schema-filter__list']" +
+            "/descendant::span[contains(text(),'%s')]";
     private String commonLocatorForInput = "//span[text()='%s']/following::div[@class='schema-filter__group']/child::" +
             "div/input[contains(@data-bind,'value: facet.value.";
     private String commonLocatorForDropdown = "//span[text()='%s']/following::div[@class='schema-filter__group']/child::" +
@@ -26,14 +26,13 @@ public class ListOfProductsPage extends BaseOnlinerPage {
     }
 
     public void chooseOptionOfCheckBox(String nameOfCheckboxList, String optionForCheckbox) {
-        Checkbox cbxOptionOfDevice = new Checkbox(By.xpath(String.format(commonLocatorForCheckboxList,
-                nameOfCheckboxList).concat(String.format(commonLocatorForCheckboxOption,
-                optionForCheckbox))), "Device option checkbox");
+        Checkbox cbxOptionOfDevice = new Checkbox(By.xpath(String.format(commonLocatorForCheckbox,nameOfCheckboxList,
+                optionForCheckbox)),"Device option checkbox");
         cbxOptionOfDevice.scrollIntoView();
         cbxOptionOfDevice.clickAndWait();
     }
 
-    public void setInputValue(String categoryOfValue, String nameOfInput, String value) {
+    private void setInputValue(String categoryOfValue, String nameOfInput, String value) {
         switch (categoryOfValue) {
             case ("min") -> categoryOfValue = "from')]";
             case ("max") -> categoryOfValue = "to')]";
@@ -49,7 +48,7 @@ public class ListOfProductsPage extends BaseOnlinerPage {
         setInputValue("max", nameOfInput, maxValue);
     }
 
-    public void setDropdownValue(String categoryOfValue, String nameOfDropdown, String value) {
+    private void setDropdownValue(String categoryOfValue, String nameOfDropdown, String value) {
         switch (categoryOfValue) {
             case ("min") -> categoryOfValue = "from')]";
             case ("max") -> categoryOfValue = "to')]";
